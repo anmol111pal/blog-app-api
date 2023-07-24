@@ -1,0 +1,25 @@
+{
+  "name": "blog-app",
+  "version": "1.0.0",
+  "description": "This application provides the backend to a blogging app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Anmol Pal",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.3.4",
+    "shortid": "^2.2.16"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
