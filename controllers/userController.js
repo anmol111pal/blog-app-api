@@ -26,7 +26,9 @@ const register = async (req, res) => {
     loggedInUsers.set(user_id, createdUser._id.toString());
     res.cookie("user_id", user_id);
     console.log(`${user.name} logged in`);
-    res.redirect("/api/blogs");
+    res.status(200).send({
+        user
+    });
 }
 
 const login = async (req, res) => {
@@ -44,7 +46,9 @@ const login = async (req, res) => {
         const user_id = shortid.generate();
         loggedInUsers.set(user_id, userMatch._id.toString());
         res.cookie("user_id", user_id);
-        res.redirect("/api/blogs");
+        res.status(200).send({
+            userMatch
+        });
     }
 }
 
