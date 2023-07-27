@@ -1,7 +1,6 @@
-const shortid = require("shortid");
-const User = require("../models/UserModel.js");
-
-const loggedInUsers = require("./login.js");
+import shortid from "shortid";
+import User from "../models/UserModel.js";
+import loggedInUsers from "./login.js";
 
 const getUserDetails = async (req, res) => {
     if(req.cookies.user_id) {
@@ -68,6 +67,6 @@ const logout = async (req, res) => {
     }
 }
 
-module.exports = {
+export {
     getUserDetails, register, login, logout
-}
+};

@@ -1,13 +1,14 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
+import express, { urlencoded } from "express";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import dotenv from "dotenv";
 
-require("dotenv").config()
+import userRoute from "./routes/userRoute.js";
+import blogRoute from "./routes/blogsRoute.js";
+import mongoose from "mongoose";
 
-const userRoute = require("./routes/userRoute.js");
-const blogRoute = require("./routes/blogsRoute.js");
-const mongoose = require("mongoose");
+dotenv.config();
 
 const app = express();
 const HOSTNAME = process.env.HOSTNAME || "localhost";

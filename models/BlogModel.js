@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, Types, model } from "mongoose";
 
-const blogSchema = new mongoose.Schema({
+const blogSchema = new Schema({
     title: {
         type: String,
         required: true,
@@ -15,12 +15,12 @@ const blogSchema = new mongoose.Schema({
         maxlength: 550
     },
     author: {
-        type: mongoose.Types.ObjectId,
+        type: Types.ObjectId,
         ref: "User"
     },
     likes: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "User"
         }
     ],
@@ -30,5 +30,5 @@ const blogSchema = new mongoose.Schema({
     timestamps: true // createdAt & updatedAt
 });
 
-const Blog = mongoose.model("Blog", blogSchema);
-module.exports = Blog;
+const Blog = model("Blog", blogSchema);
+export default Blog;

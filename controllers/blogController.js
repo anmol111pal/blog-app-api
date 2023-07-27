@@ -1,6 +1,6 @@
-const Blog = require("../models/BlogModel.js");
-const User = require("../models/UserModel.js");
-const loggedInUsers = require("./login.js");
+import Blog from "../models/BlogModel.js";
+import User from "../models/UserModel.js";
+import loggedInUsers from "./login.js";
 
 const getBlog = async (req, res) => {
     const _id = req.params.id;
@@ -84,7 +84,7 @@ const write = async (req, res) => {
     }
 }
 
-module.exports = {
+export {
     getBlog,
     getAllBlogs,
     getMyBlogs,

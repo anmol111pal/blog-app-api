@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     username: {
         type: String,
         required: true,
@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     },
     posts: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "Blog"
         }
     ]
@@ -35,5 +35,5 @@ const userSchema = new mongoose.Schema({
     timestamps: true // createdAt & updatedAt
 });
 
-const User = mongoose.model("user", userSchema);
-module.exports = User;
+const User = model("user", userSchema);
+export default User;
