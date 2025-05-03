@@ -1,8 +1,9 @@
+import { Request, Response } from "express";
 import Blog from "../models/BlogModel.js";
 import User from "../models/UserModel.js";
-import loggedInUsers from "./login.js";
+import loggedInUsers from "../utils/login.js";
 
-const getBlog = async (req, res) => {
+const getBlog = async (req: Request, res: Response) => {
     const _id = req.params.id;
     try {
         const blog = await Blog.findOne({_id}, {_id: 0, title: 1, content: 1, author: 1, likes: 1, createdAt: 1, updatedAt: 1});
@@ -18,7 +19,7 @@ const getBlog = async (req, res) => {
     }
 }
 
-const getAllBlogs = async (req, res) => {
+const getAllBlogs = async (req: Request, res: Response) => {
     if(req.cookies.user_id) {
         const blogs = await Blog.find({}, {_id: 0, title: 1, content: 1, author: 1, likes: 1, createdAt: 1}); // all blogs
         res.status(200).send({
@@ -33,7 +34,7 @@ const getAllBlogs = async (req, res) => {
     }
 }
 
-const getMyBlogs = async (req, res) => {
+const getMyBlogs = async (req: Request, res: Response) => {
     if(req.cookies.user_id) {
         const user_id = loggedInUsers.get(req.cookies.user_id);
         const blogs = await Blog.find({_id: user_id}, {_id: 0, title: 1, content: 1, likes: 1, createdAt: 1});
@@ -50,7 +51,7 @@ const getMyBlogs = async (req, res) => {
     }
 }
 
-const write = async (req, res) => {
+const write = async (req: Request, res: Response) => {
     if(req.cookies.user_id) {
         const {title, content} = req.body;
         const user_id = loggedInUsers.get(req.cookies.user_id);

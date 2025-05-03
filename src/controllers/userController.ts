@@ -1,10 +1,11 @@
+import { Request, Response } from "express";
 import shortid from "shortid";
 import User from "../models/UserModel.js";
-import loggedInUsers from "./login.js";
+import loggedInUsers from "../utils/login.js";
 
-const getUserDetails = async (req, res) => {
-    if(req.cookies.user_id) {
-        const user_id = loggedInUsers.get(req.cookies.user_id);
+const getUserDetails = async (req: Request, res: Response) => {
+    if(req?.cookies?.user_id) {
+        const user_id: string = loggedInUsers.get(req?.cookies?.user_id);
         const user = await User.findOne({_id: user_id}, {username: 1, name: 1, email: 1, posts: 1, _id: 0});
 
         res.status(200).send(user);
@@ -16,7 +17,7 @@ const getUserDetails = async (req, res) => {
     }
 }
 
-const register = async (req, res) => {
+const register = async (req: Request, res: Response) => {
     const user = req.body;
 
     const createdUser = await User.create(user);
@@ -30,7 +31,7 @@ const register = async (req, res) => {
     });
 }
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
     const {username, password} = req.body;
 
     const userMatch = await User.findOne({username, password}) || null;
@@ -51,7 +52,7 @@ const login = async (req, res) => {
     }
 }
 
-const logout = async (req, res) => {
+const logout = async (req: Request, res: Response) => {
     if(req.cookies.user_id) {
         res.clearCookie("user_id");
         loggedInUsers.delete(req.cookies.user_id);

@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 
-import { getUserDetails, register, login, logout } from "../controllers/userController.js";
+import { getUserDetails, register, login, logout } from "../controllers/userController";
 
 
 router.post("/register", register);
