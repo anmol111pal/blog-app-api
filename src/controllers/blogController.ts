@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import Blog from "../models/BlogModel.js";
-import User from "../models/UserModel.js";
-import loggedInUsers from "../utils/login.js";
+import Blog from "../models/Blog";
+import User from "../models/User";
+import loggedInUsers from "../utils/login";
 
-const getBlog = async (req: Request, res: Response) => {
+export const getBlog = async (req: Request, res: Response) => {
     const _id = req.params.id;
     try {
         const blog = await Blog.findOne({_id}, {_id: 0, title: 1, content: 1, author: 1, likes: 1, createdAt: 1, updatedAt: 1});
@@ -19,7 +19,7 @@ const getBlog = async (req: Request, res: Response) => {
     }
 }
 
-const getAllBlogs = async (req: Request, res: Response) => {
+export const getAllBlogs = async (req: Request, res: Response) => {
     if(req.cookies.user_id) {
         const blogs = await Blog.find({}, {_id: 0, title: 1, content: 1, author: 1, likes: 1, createdAt: 1}); // all blogs
         res.status(200).send({
@@ -34,7 +34,7 @@ const getAllBlogs = async (req: Request, res: Response) => {
     }
 }
 
-const getMyBlogs = async (req: Request, res: Response) => {
+export const getMyBlogs = async (req: Request, res: Response) => {
     if(req.cookies.user_id) {
         const user_id = loggedInUsers.get(req.cookies.user_id);
         const blogs = await Blog.find({_id: user_id}, {_id: 0, title: 1, content: 1, likes: 1, createdAt: 1});
@@ -51,15 +51,14 @@ const getMyBlogs = async (req: Request, res: Response) => {
     }
 }
 
-const write = async (req: Request, res: Response) => {
+export const write = async (req: Request, res: Response) => {
     if(req.cookies.user_id) {
         const {title, content} = req.body;
         const user_id = loggedInUsers.get(req.cookies.user_id);
         
-        let blog = null;
         try {
             // create a blog
-            blog = await Blog.create({title, content, author: user_id});
+            const blog = await Blog.create({title, content, author: user_id});
             console.log("Blog published!");
             // update the user doc with the id of the blog's id
             const result = await User.updateOne({ _id: user_id }, { $push: { posts: blog._id } });
@@ -83,11 +82,4 @@ const write = async (req: Request, res: Response) => {
             message: "Auth error"
         });
     }
-}
-
-export {
-    getBlog,
-    getAllBlogs,
-    getMyBlogs,
-    write
 }
