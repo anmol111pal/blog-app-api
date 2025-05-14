@@ -65,7 +65,6 @@ export class InfraStack extends cdk.Stack {
       requireImdsv2: true,
       associatePublicIpAddress: true,
       keyPair: ec2.KeyPair.fromKeyPairName(this, 'Blog-App-KeyPair', 'ec2-keypair'),
-      disableApiTermination: true,
     });
 
     const blogTable = new Table(this, 'BlogTable', {
