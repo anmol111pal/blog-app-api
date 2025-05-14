@@ -8,8 +8,6 @@ pipeline {
 
     environment {
         EC2_USER = "ubuntu"
-        REPO_URL = "https://github.com/anmol111pal/blog-app-api.git"
-        REPO_DIR = "/home/${EC2_USER}/app"
     }
 
     stages {
@@ -63,19 +61,9 @@ pipeline {
                 script{
                     withEnv(["EC2_HOST=${env.EC2_HOST}"]) {
                         sshagent(['ssh-cred']) {
-                            sh """
-                                ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << 'EOF'
-                                if [ ! -d "$REPO_DIR" ]; then
-                                    git clone $REPO_URL $REPO_DIR
-                                else
-                                    cd $REPO_DIR && git pull origin master
-                                fi
-                                cd $REPO_DIR && cd src/
-                                npm install
-                                tsc
-                                nohup node dist/index.js > app.log 2>&1 &
-                                EOF
-                            """
+                            sh "scp -o StrictHostKeyChecking=no infra/scripts/deploy-app.sh $EC2_USER@$EC2_HOST:/home/$EC2_USER/deploy-app.sh"
+
+                            sh "ssh -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST 'bash /home/$EC2_USER/deploy-app.sh'"
                         }
                     }
                 }
