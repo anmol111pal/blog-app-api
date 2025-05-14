@@ -98,5 +98,11 @@ export class InfraStack extends cdk.Stack {
 
     userTable.grantReadWriteData(ec2InstanceRole);
     blogTable.grantReadWriteData(ec2InstanceRole);
+
+    new cdk.CfnOutput(this, 'InstancePublicIP', {
+      value: ec2Instance.instancePublicIp,
+      description: 'Public IP address of the EC2 instance',
+      exportName: 'InstancePublicIP',
+    });
   }
 }
