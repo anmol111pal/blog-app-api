@@ -11,7 +11,10 @@ export class InfraStack extends cdk.Stack {
     const userDataScript = ec2.UserData.forLinux();
     userDataScript.addCommands(
       'sudo apt update -y',
-      'sudo apt install -y nodejs npm',
+      'sudo apt remove -y libnode-dev libnode72 nodejs',
+      'sudo apt install -y curl',
+      'curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -',
+      'sudo apt install -y nodejs',
       'sudo apt upgrade -y',
       'sudo npm install -g typescript',
     );
